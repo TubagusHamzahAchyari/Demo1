@@ -1,4 +1,5 @@
 import barcode
+import qrcode
 from barcode.writer import ImageWriter
 from io import BytesIO
 from django.core.files import File
@@ -26,6 +27,7 @@ class Purchase(models.Model):
 class Customer(models.Model):
     name = models.CharField(max_length=50)
     barcode = models.ImageField(upload_to='barcodes/', blank=True)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True)
 
     def __str__(self):
         return self.name
@@ -36,3 +38,21 @@ class Customer(models.Model):
         code = COD128(f'{self.name}', writer=ImageWriter()).write(rv)
         self.barcode.save(f'{self.name}.png', File(rv), save=False)
         return super().save(*args, **kwargs)
+
+    def save(self, *args, **kwargs):  # overriding save()
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(self.name)
+        qr.make(fit=True)
+
+        img = qr.make_image(fill_color="black", back_color="white")
+        buffer = BytesIO()
+        img.save(buffer, 'PNG')
+        self.qr_code.save(f'{self.name}.png', File(buffer), save=False)
+        super().save(*args, **kwargs)
+
+
