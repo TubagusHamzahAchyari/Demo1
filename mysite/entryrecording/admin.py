@@ -10,6 +10,11 @@ class CustomerDataAdmin(admin.ModelAdmin):
     def __str__(self):
         return self.name
 
+class CustomerAdmin(admin.ModelAdmin):
+    def __str__(self):
+        return self.
+
+
 
 admin.site.register(Customer)
 admin.site.register(CustomerData, CustomerDataAdmin)

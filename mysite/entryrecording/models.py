@@ -26,6 +26,7 @@ class Purchase(models.Model):
 # Barcode
 class Customer(models.Model):
     name = models.CharField(max_length=50)
+    cutomer_data = models.ForeignKey(CustomerData, null=True, blank=True, on_delete=models.CASCADE)
     barcode = models.ImageField(upload_to='barcodes/', blank=True)
     qr_code = models.ImageField(upload_to='qr_codes/', blank=True)
 
