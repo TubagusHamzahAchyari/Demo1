@@ -33,12 +33,13 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):  # overriding save()
+    def save(self, *args, **kwargs):
         COD128 = barcode.get_barcode_class('code128')
         rv = BytesIO()
-        code = COD128(f'{self.name}', writer=ImageWriter()).write(rv)
+        code = COD128(f'{self.name}{self.customer_data.name}', writer=ImageWriter())
+        code.write(rv)
         self.barcode.save(f'{self.name}.png', File(rv), save=False)
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def save(self, *args, **kwargs):  # overriding save()
         qr = qrcode.QRCode(
