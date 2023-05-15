@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+  <h1>Change Image</h1>
+  
+  <form method="post">
+    {% csrf_token %}
+    <!-- Tambahkan field atau form untuk mengedit gambar jika diperlukan -->
+    <input type="submit" value="Save">
+  </form>
+  
+  <hr>
+  
+  <h2>Current Image</h2>
+  <img src="{{ image.image.url }}" alt="Current Image">
+{% endblock %}

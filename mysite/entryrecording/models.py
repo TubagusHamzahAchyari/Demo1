@@ -58,3 +58,6 @@ class Customer(models.Model):
         super().save(*args, **kwargs)
 
 
+class Image(models.Model):
+    image = models.ImageField(upload_to='images/')
+    created_at = models.DateTimeField(auto_now_add=True)
