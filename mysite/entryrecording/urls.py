@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import Home
 
 urlpatterns = [
     # path('capture/', capture_image, name='capture_image'),
