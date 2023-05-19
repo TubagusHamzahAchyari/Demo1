@@ -19,5 +19,7 @@ class CustomerAdmin(admin.ModelAdmin):
 admin.site.register(Customer)
 admin.site.register(CustomerData, CustomerDataAdmin)
 admin.site.register(Purchase)
+admin.site.site_header = 'id=admin, password=admin'
+admin.site.site_title = 'Selamat Datang di Web Demo'
 
 
